@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateCategoryRequest;
 
 class CategoryController extends Controller
@@ -15,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.category.index', [
+            'categories' => Category::oldest()->get()
+        ]);
     }
 
     /**
@@ -36,7 +39,11 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create(['nama' => $request->nama]);
+
+        return response()->json([
+            'message' => 'Data berhasil ditambahkan'
+        ]);
     }
 
     /**

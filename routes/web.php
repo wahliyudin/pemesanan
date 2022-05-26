@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Models\User;
@@ -24,6 +25,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {
