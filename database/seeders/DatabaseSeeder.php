@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
 
         OrderProduct::factory(20)->create();
         OrderUser::factory(10)->create();
+        // $this->call(LaratrustSeeder::class);
+        $this->call(RoleSeeder::class);
     }
 }
