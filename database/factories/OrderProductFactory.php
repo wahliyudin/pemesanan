@@ -18,7 +18,8 @@ class OrderProductFactory extends Factory
         return [
             'order_id' => $this->faker->randomElement(Order::pluck('id')->toArray()),
             'product_id' => $this->faker->randomElement(Product::pluck('id')->toArray()),
-            'qty' => $this->faker->numberBetween(5, 10)
+            'qty' => $this->faker->numberBetween(5, 10),
+            'total' => $this->faker->numberBetween(10_000, 100_000)
         ];
     }
 }

@@ -17,9 +17,12 @@ class CreateOrdersTable extends Migration
             $table->id();
             $table->string('kode_pesanan');
             $table->date('tanggal');
-            $table->boolean('status')->default(0);
+            $table->integer('status')->default(0);
             $table->bigInteger('total');
-            $table->string('no_antrian')->nullable();
+            $table->integer('no_antrian')->nullable();
+            $table->unsignedBigInteger('user_id');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

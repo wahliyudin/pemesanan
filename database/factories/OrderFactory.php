@@ -17,9 +17,10 @@ class OrderFactory extends Factory
         return [
             'kode_pesanan' => 'KP'.$this->faker->randomAscii(),
             'tanggal' => now(),
-            'status' => $this->faker->boolean(),
+            'status' => $this->faker->numberBetween(0, 2),
             'total' => $this->faker->numberBetween(100_000, 1000_000),
-            'no_antrian' => $this->faker->randomDigitNotZero(),
+            'no_antrian' => $this->faker->unique()->randomNumber(),
+            'user_id' => $this->faker->randomElement(User::pluck('id')->toArray())
         ];
     }
 }

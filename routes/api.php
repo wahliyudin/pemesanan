@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +22,9 @@ Route::name('api.')->group(function () {
     Route::prefix('products')->name('products.')->group(function () {
         Route::post('/', [ProductController::class, 'index'])->name('index');
         Route::delete('{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::post('/', [OrderController::class, 'index'])->name('index');
     });
 });

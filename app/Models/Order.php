@@ -9,21 +9,26 @@ class Order extends Model
 {
     use HasFactory;
 
+    const STATUS_TRUE = 1;
+    const STATUS_FALSE = 0;
+    const STATUS_CANCEL = 2;
+
     protected $fillable = [
         'kode_pesanan',
         'tanggal',
         'status',
         'total',
-        'no_antrian',
+        'user_id',
+        'no_antrian'
     ];
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'order_products')->withPivot('qty');
+        return $this->belongsToMany(Product::class, 'order_products')->withPivot(['qty', 'total']);
     }
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class, 'order_users');
+        return $this->belongsTo(User::class);
     }
 }

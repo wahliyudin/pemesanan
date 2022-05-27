@@ -4,6 +4,7 @@ use App\Events\CategoryCreated;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\TransaksiController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,11 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('products/{id}/update', [ProductController::class, 'update'])->name('products.update');
+
+    Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
+    Route::get('transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('transaksi.bayar');
+    Route::post('transaksi/{id}/payment', [TransaksiController::class, 'payment'])->name('transaksi.payment');
+    Route::get('transaksi/{id}/next', [TransaksiController::class, 'next'])->name('transaksi.next');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {
