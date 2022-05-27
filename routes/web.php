@@ -1,32 +1,28 @@
 <?php
 
+use App\Events\CategoryCreated;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
-    // return User::with('orders', 'orders.products')->get();
+    // CategoryCreated::dispatch('Created');
+    // echo "test";
     return redirect()->route('login');
 });
 
 Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('categories', CategoryController::class);
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
+    Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {

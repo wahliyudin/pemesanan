@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\CategoryCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Exception;
@@ -35,6 +36,7 @@ class CategoryController extends Controller
             Category::create([
                 'nama' => $request->nama
             ]);
+            CategoryCreated::dispatch('Category Berhasil Disimpan');
             return response()->json([
                 'status' => 'success',
                 'message' => 'Menambahkan data category',

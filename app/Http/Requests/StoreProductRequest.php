@@ -27,7 +27,7 @@ class StoreProductRequest extends FormRequest
             'nama' => 'required',
             'keterangan' => 'required',
             'harga' => 'required',
-            'photo' => 'required',
+            'photo' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_id' => 'required'
         ];
     }

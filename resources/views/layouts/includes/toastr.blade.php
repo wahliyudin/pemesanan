@@ -5,7 +5,7 @@
 @push('script')
     <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
-    {{-- @if (session()->has('success'))
+    @if (session()->has('success'))
         <script>
             toastr.success("{{ session('success') }}")
         </script>
@@ -19,5 +19,5 @@
         <script>
             toastr.warning("{{ session('warning') }}")
         </script>
-    @endif --}}
+    @endif
 @endpush

@@ -7,18 +7,20 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Kategori</h3>
-                        <button class="btn btn-sm btn-primary float-right" onclick="tambahCategory()"><i
+                        <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary float-right"><i
                                 class="fas fa-plus mr-2"></i>
                             Tambah
-                            Data</button>
+                            Data</a>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="category" class="table table-bordered table-striped">
+                        <table id="product" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Photo</th>
                                     <th>Nama</th>
+                                    <th>Harga</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -31,7 +33,6 @@
             </div>
         </div>
     </div>
-    @include('backend.category.modals')
 @endsection
 @include('layouts.includes.datatables')
 @include('layouts.includes.toastr')
@@ -39,7 +40,7 @@
     <script type="text/javascript">
         var table;
         setTimeout(function() {
-            tableCategory();
+            tableProduct();
         }, 500);
         var ajaxError = function(jqXHR, xhr, textStatus, errorThrow, exception) {
             if (jqXHR.status === 0) {
@@ -67,15 +68,32 @@
             }
         });
 
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, '').toString(),
+                split = number_string.split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka satuan ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+        }
+
         // function to retrieve DataTable server side
-        function tableCategory() {
-            $('#category').dataTable().fnDestroy();
-            table = $('#category').DataTable({
+        function tableProduct() {
+            $('#product').dataTable().fnDestroy();
+            table = $('#product').DataTable({
                 responsive: true,
                 serverSide: true,
                 processing: true,
                 ajax: {
-                    url: "{{ route('api.categories.index') }}",
+                    url: "{{ route('api.products.index') }}",
                     type: "post",
                     data: {
                         "_token": "{{ csrf_token() }}"
@@ -86,8 +104,26 @@
                         name: 'DT_RowIndex'
                     },
                     {
+                        "name": "photo",
+                        "data": "photo",
+                        "render": function(data, type, full, meta) {
+                            return "<img style='border-radius: 10px;' src=\"" + data +
+                            "\" height=\"100\"/>";
+                        },
+                        "title": "Image",
+                        "orderable": true,
+                        "searchable": true
+                    },
+                    {
                         data: 'nama',
                         name: 'nama'
+                    },
+                    {
+                        data: 'harga',
+                        name: 'harga',
+                        "render": function(data, type, full, meta) {
+                            return formatRupiah(String(data), 'Rp. ');
+                        }
                     },
                     {
                         data: 'action',
@@ -102,87 +138,6 @@
                     [10, 20, 50, 'All']
                 ]
             });
-        }
-
-        // Add Data
-        function tambahCategory() {
-            $('#modal-store').modal('show');
-            $('#nama').val('');
-            $('#btn-store-category').prop('disabled', false);
-        }
-
-        function storeCategory() {
-            let nama = $('#nama').val();
-
-            if (!nama) {
-                toastr.warning('Nama category tidak boleh kosong!', 'Peringatan!');
-                return false;
-            }
-
-            $('#btn-store-category').prop('disabled', true);
-            var type = 'POST';
-            var url = "{{ route('api.categories.store') }}";
-            $.ajax({
-                url: url,
-                type: type,
-                data: $('#form-category').serialize(),
-                success: function(data) {
-                    $('#modal-store').modal('hide');
-                    toastr.success(data.message, 'Berhasil!');
-                    table.ajax.reload();
-                },
-                error: ajaxError,
-                complete: function() {
-                    $('#btn-store-category').prop('disabled', false);
-                },
-            });
-        }
-
-        // Edit Data
-        $('body').on('click', '.edit', function(e) {
-            e.preventDefault();
-            editCategory($(this).attr('id'))
-        });
-
-        function editCategory(id) {
-            $.ajax({
-                url: "{{ env('APP_URL') }}/api/categories/" + id + "/edit",
-                type: "GET",
-                dataType: "JSON",
-                success: function(resp) {
-                    $('#modal-update').modal('show');
-                    $('#category_id').val(resp.data.id);
-                    $('#nama_update').val(resp.data.nama);
-                    $('#btn-update-category').prop('disabled', false);
-                },
-                error: ajaxError,
-            });
-        }
-
-        function updateCategory() {
-            let nama = $('#nama_update').val();
-            if (!nama) {
-                toastr.warning('Nama category tidak boleh kosong!', 'Peringatan!');
-                return false;
-            }
-
-            let id = $('#category_id').val();
-            $('#btn-update-category').prop('disabled', true);
-            $.ajax({
-                url: "{{ env('APP_URL') }}/api/categories/" + id + "/update",
-                type: 'PUT',
-                data: $('#form-update-category').serialize(),
-                success: function(resp) {
-                    $('#modal-update').modal('hide');
-                    toastr.success(resp.message, 'Berhasil!');
-                    table.ajax.reload();
-                },
-                error: ajaxError,
-                complete: function() {
-                    $('#btn-update-category').prop('disabled', false);
-                },
-            });
-
         }
 
         // delete
@@ -203,7 +158,7 @@
             }).then((result) => {
                 if (result.value) {
                     $.ajax({
-                        url: "{{ env('APP_URL') }}/api/categories/" + id + "/destroy",
+                        url: "{{ env('APP_URL') }}/api/products/" + id + "/destroy",
                         type: 'DELETE',
                         success: function(resp) {
                             toastr.success(resp.message, 'Berhasil!');
@@ -214,24 +169,5 @@
                 }
             })
         }
-    </script>
-    <script src="/js/app.js"></script>
-    <script>
-        window.Echo.channel("messages").listen("CategoryCreated", (event) => {
-            // console.log(event);
-            // alert('sukses');
-            table.ajax.reload();
-            Notification.requestPermission(permission => {
-                let notification = new Notification('New category alert!', {
-                    body: event.message, // content for the alert
-                    icon: "{{ asset('frontend/images/logo.png') }}" // optional image url
-                });
-
-                // link to page on clicking the notification
-                notification.onclick = () => {
-                    window.open(window.location.href);
-                };
-            });
-        });
     </script>
 @endpush

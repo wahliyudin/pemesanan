@@ -1,13 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Traits\StoreImageTrait;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
+use Image;
 
 class ProductController extends Controller
 {
+    use StoreImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,15 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.product.index', [
+            'breadcrumb' => [
+                'title' => 'Products',
+                'path' => [
+                    'Master Data' => route('admin.products.index'),
+                    'Products' => 0
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -25,40 +40,48 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.product.create', [
+            'breadcrumb' => [
+                'title' => 'Tambah Product',
+                'path' => [
+                    'Master Data' => route('admin.products.index'),
+                    'Products' => route('admin.products.index'),
+                    'Create' => 0
+                ]
+            ],
+            'categories' => Category::latest()->get(['id', 'nama'])
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * store
      *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  mixed $request
+     * @return void
      */
     public function store(StoreProductRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Product $product)
-    {
-        //
+        $request->merge(['harga' => replaceRupiah($request->harga)]);
+        $data = $request->all();
+        $data['photo'] = $this->storeImage($request->file('photo'));
+        Product::create($data);
+        return redirect()->route('admin.products.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Product  $product
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+        }
+
+        return view('backend.product.edit');
     }
 
     /**
