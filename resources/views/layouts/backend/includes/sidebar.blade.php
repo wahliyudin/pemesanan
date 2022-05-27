@@ -54,6 +54,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.accounts.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Accounts</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.products.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Products</p>

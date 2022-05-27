@@ -56,6 +56,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Photo</th>
                                     <th>Nama</th>
                                     <th>Harga</th>
                                     <th>Qty</th>
@@ -67,6 +68,10 @@
                                     @foreach ($order->products as $product)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>
+                                                <img style='border-radius: 10px;' src="{{ $product->photo }}"
+                                                    height="100" />
+                                            </td>
                                             <td>{{ $product->nama }}</td>
                                             <td>Rp. {{ numberFormat($product->harga) }}</td>
                                             <td>{{ $product->pivot->qty }}</td>

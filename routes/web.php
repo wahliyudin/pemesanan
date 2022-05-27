@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\CategoryCreated;
+use App\Http\Controllers\Backend\AccountController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
@@ -11,8 +12,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
-    // CategoryCreated::dispatch('Created');
-    // echo "test";
     return redirect()->route('login');
 });
 
@@ -20,6 +19,9 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+
+    Route::get('accounts', [AccountController::class, 'index'])->name('accounts.index');
+
     Route::get('products', [ProductController::class, 'index'])->name('products.index');
     Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
