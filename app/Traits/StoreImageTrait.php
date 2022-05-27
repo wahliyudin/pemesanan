@@ -16,9 +16,10 @@ trait StoreImageTrait
 
         $destinationPath = public_path('storage/thumbnail');
         $img = Image::make($image->getRealPath());
-        $img->resize($height, $width, function ($constraint) {
-        $constraint->aspectRatio();
-        })->save($destinationPath . '/' . $input['imagename']);
+        // $img->resize($width, $height, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // })->save($destinationPath . '/' . $input['imagename']);
+        $img->resize($width, $height)->save($destinationPath . '/' . $input['imagename']);
 
         $destinationPath = public_path('storage/images');
         $image->move($destinationPath, $input['imagename']);

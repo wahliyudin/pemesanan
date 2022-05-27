@@ -58,7 +58,6 @@ class TransaksiController extends Controller
         try {
             $id = Crypt::decrypt($id);
         } catch (DecryptException $e) {
-
         }
         $request->merge(['tagihan' => replaceRupiah($request->tagihan)]);
         $request->merge(['total' => replaceRupiah($request->total)]);
@@ -71,11 +70,13 @@ class TransaksiController extends Controller
         return redirect()->route('admin.transaksi.index')->with('success', 'Pembayaran berhasil');
     }
 
-    public function next($id)
+    public function skip($id)
     {
         try {
             $id = Crypt::decrypt($id);
         } catch (DecryptException $e) {
         }
+        Order::find($id)->update(['status' => Order::STATUS_CANCEL]);
+        return redirect()->route('admin.transaksi.index');
     }
 }

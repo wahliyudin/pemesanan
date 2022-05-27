@@ -39,10 +39,9 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="row justify-content-between align-items-center" style="width: 100%;">
-                            <button class="btn btn-danger">Lewat</button>
-                            <a href="{{ route('admin.transaksi.next', Crypt::encrypt($order?->id)) }}"
-                                class="btn btn-primary">Next</a>
+                        <div class="row justify-content-end align-items-center" style="width: 100%;">
+                            <a href="{{ route('admin.transaksi.skip', Crypt::encrypt($order?->id)) }}"
+                                class="btn btn-danger float-right">Lewat</a>
                         </div>
                     </div>
                 </div>

@@ -10,26 +10,30 @@
             </button>
             <div class="collapse navbar-collapse" id="navbars-rs-food">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item {{ request()->routeIs('customer.home') ? 'active' : '' }}"><a
+                            class="nav-link" href="{{ route('customer.home') }}">Home</a></li>
+                    <li class="nav-item {{ request()->routeIs('customer.menu') ? 'active' : '' }}"><a
+                            class="nav-link" href="{{ route('customer.menu') }}">Menu</a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('customer.about') ? 'active' : '' }}"><a
+                            class="nav-link" href="{{ route('customer.about') }}">About</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
                             <a class="dropdown-item" href="reservation.html">Reservation</a>
-                            <a class="dropdown-item" href="stuff.html">Stuff</a>
-                            <a class="dropdown-item" href="gallery.html">Gallery</a>
+                            <a class="dropdown-item" href="{{ route('customer.stuff') }}">Stuff</a>
+                            <a class="dropdown-item" href="{{ route('customer.gallery') }}">Gallery</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                            <a class="dropdown-item" href="blog.html">blog</a>
-                            <a class="dropdown-item" href="blog-details.html">blog Single</a>
+                            <a class="dropdown-item" href="{{ route('customer.blog') }}">blog</a>
+                            <a class="dropdown-item" href="{{ route('customer.blog-detail') }}">blog Single</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
+                        <a class="nav-link" href="{{ route('customer.contact') }}">Contact</a>
                     </li>
                     @auth
                         <li class="nav-item">

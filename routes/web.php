@@ -31,11 +31,18 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::get('transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('transaksi.bayar');
     Route::post('transaksi/{id}/payment', [TransaksiController::class, 'payment'])->name('transaksi.payment');
-    Route::get('transaksi/{id}/next', [TransaksiController::class, 'next'])->name('transaksi.next');
+    Route::get('transaksi/{id}/skip', [TransaksiController::class, 'skip'])->name('transaksi.skip');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+    Route::get('menu', [HomeController::class, 'menu'])->name('menu');
+    Route::get('about', [HomeController::class, 'about'])->name('about');
+    Route::get('stuff', [HomeController::class, 'stuff'])->name('stuff');
+    Route::get('gallery', [HomeController::class, 'gallery'])->name('gallery');
+    Route::get('blog', [HomeController::class, 'blog'])->name('blog');
+    Route::get('blog-detail', [HomeController::class, 'blogDetail'])->name('blog-detail');
+    Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 });
 
 Route::get('/dashboard', [CheckController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');

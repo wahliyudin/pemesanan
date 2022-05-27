@@ -45,5 +45,13 @@ class RoleSeeder extends Seeder
             'password' => Hash::make('123456789'), // password
             'remember_token' => Str::random(10),
         ])->attachRole('admin');
+        User::create([
+            'name' => 'ari',
+            'email' => 'ariahsariwahli@gmail.com',
+            'phone' => '085693296980',
+            'email_verified_at' => now(),
+            'password' => Hash::make('123456789'), // password
+            'remember_token' => Str::random(10),
+        ])->attachRole('customer');
     }
 }

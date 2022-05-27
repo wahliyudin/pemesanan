@@ -73,6 +73,7 @@
                                         <label for="photo" style="align-self: flex-start;">Preview</label>
 
                                         <img class="photo-preview img-fluid mb-3 col-sm-5 rounded"
+                                            style="width: 320px; height: 210px; object-fit: cover;"
                                             src="{{ $product->photo }}" alt="">
                                     </div>
                                 </div>

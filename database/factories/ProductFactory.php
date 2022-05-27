@@ -18,7 +18,7 @@ class ProductFactory extends Factory
             'nama' => $this->faker->words(2, true),
             'keterangan' => $this->faker->sentence(),
             'harga' => $this->faker->numberBetween(10_000, 100_000),
-            'photo' => $this->faker->imageUrl(200, 200),
+            'photo' => $this->faker->imageUrl(350, 210),
             'category_id' => $this->faker->randomElement(Category::pluck('id')->toArray())
         ];
     }

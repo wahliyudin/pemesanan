@@ -64,7 +64,7 @@ class ProductController extends Controller
     {
         $request->merge(['harga' => replaceRupiah($request->harga)]);
         $data = $request->all();
-        $data['photo'] = $this->storeImage($request->file('photo'));
+        $data['photo'] = $this->storeImage($request->file('photo'), 300, 453);
         Product::create($data);
         return redirect()->route('admin.products.index')->with('success', 'Data berhasil disimpan');
     }
@@ -116,7 +116,7 @@ class ProductController extends Controller
         $data = $request->all();
         $product = Product::find($id);
         if ($request->hasFile('photo')) {
-            $data['photo'] = $this->storeImage($request->file('photo'));
+            $data['photo'] = $this->storeImage($request->file('photo'), 300, 453);
             $image = Str::replaceFirst(env('APP_URL'). '/'.'storage/', '', $product->photo);
             Storage::delete('public/'.$image);
         }
