@@ -10,7 +10,8 @@ use App\Models\Category;
 use App\Traits\StoreImageTrait;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
-use Image;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -79,21 +80,48 @@ class ProductController extends Controller
         try {
             $id = Crypt::decrypt($id);
         } catch (DecryptException $e) {
+            return back()->with('error', $e->getMessage());
         }
 
-        return view('backend.product.edit');
+        return view('backend.product.edit', [
+            'breadcrumb' => [
+                'title' => 'Edit Product',
+                'path' => [
+                    'Master Data' => route('admin.products.index'),
+                    'Products' => route('admin.products.index'),
+                    'Edit' => 0
+                ]
+            ],
+            'categories' => Category::latest()->get(['id', 'nama']),
+            'product' => Product::find($id)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateProductRequest  $request
-     * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+            return back()->with('error', $e->getMessage());
+        }
+        if ($request->has('harga')) {
+            $request->merge(['harga' => replaceRupiah($request->harga)]);
+        }
+        $data = $request->all();
+        $product = Product::find($id);
+        if ($request->hasFile('photo')) {
+            $data['photo'] = $this->storeImage($request->file('photo'));
+            $image = Str::replaceFirst(env('APP_URL'). '/'.'storage/', '', $product->photo);
+            Storage::delete('public/'.$image);
+        }
+        $product->update($data);
+        return redirect()->route('admin.products.index')->with('success', 'Data berhasil diubah');
     }
 
     /**

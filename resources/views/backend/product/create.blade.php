@@ -13,17 +13,26 @@
                                 <div class="form-group col-md-6">
                                     <label for="nama">Nama</label>
                                     <input type="text" name="nama" class="form-control" id="nama" placeholder="Enter nama">
+                                    @error('nama')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="keterangan">Keterangan</label>
                                     <input type="text" name="keterangan" class="form-control" id="keterangan"
                                         placeholder="Keterangan">
+                                    @error('keterangan')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
                                     <label for="harga">Harga</label>
                                     <input type="text" name="harga" class="form-control" id="harga" placeholder="Harga">
+                                    @error('harga')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Kategori</label>
@@ -33,6 +42,9 @@
                                             <option value="{{ $category->id }}">{{ $category->nama }}</option>
                                         @endforeach
                                     </select>
+                                    @error('category_id')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
@@ -44,6 +56,9 @@
                                             id="photo">
                                         <label class="custom-file-label cursor-pointer" for="photo">Choose file</label>
                                     </div>
+                                    @error('photo')
+                                        <span class="text-danger text-sm">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <div class="row flex-column" style="align-items: center;">

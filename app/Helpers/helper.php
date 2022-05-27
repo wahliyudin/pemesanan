@@ -9,3 +9,9 @@ if (!function_exists('replaceRupiah')) {
         return (int) Str::replace('.', '', $rupiah);
     }
 }
+if (!function_exists('numberFormat')) {
+    function numberFormat(int $number)
+    {
+    return number_format($number, 0, ',', '.');
+    }
+}

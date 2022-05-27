@@ -27,7 +27,7 @@ class UpdateProductRequest extends FormRequest
             'nama' => 'nullable',
             'keterangan' => 'nullable',
             'harga' => 'nullable',
-            'photo' => 'nullable',
+            'photo' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'category_id' => 'nullable'
         ];
     }

@@ -23,6 +23,7 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('products/store', [ProductController::class, 'store'])->name('products.store');
     Route::get('products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('products/{id}/update', [ProductController::class, 'update'])->name('products.update');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {

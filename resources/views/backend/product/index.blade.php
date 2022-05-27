@@ -108,7 +108,7 @@
                         "data": "photo",
                         "render": function(data, type, full, meta) {
                             return "<img style='border-radius: 10px;' src=\"" + data +
-                            "\" height=\"100\"/>";
+                                "\" height=\"100\"/>";
                         },
                         "title": "Image",
                         "orderable": true,
@@ -143,10 +143,10 @@
         // delete
         $('body').on('click', '.delete', function(e) {
             e.preventDefault();
-            deleteCategory($(this).attr('id'))
+            deleteProduct($(this).attr('id'))
         });
 
-        function deleteCategory(id) {
+        function deleteProduct(id) {
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
                 text: "Category akan dihapus secara permanen!",

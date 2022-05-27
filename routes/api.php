@@ -20,5 +20,6 @@ Route::name('api.')->group(function () {
 
     Route::prefix('products')->name('products.')->group(function () {
         Route::post('/', [ProductController::class, 'index'])->name('index');
+        Route::delete('{id}/destroy', [ProductController::class, 'destroy'])->name('destroy');
     });
 });
