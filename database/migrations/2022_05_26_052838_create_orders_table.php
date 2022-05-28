@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->date('tanggal');
             $table->integer('status')->default(0);
             $table->bigInteger('total');
-            $table->integer('no_antrian')->nullable();
+            $table->string('no_antrian')->nullable();
             $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

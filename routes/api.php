@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AccountController;
+use App\Http\Controllers\API\CartController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ProductController;
@@ -36,4 +37,9 @@ Route::name('api.')->group(function () {
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::post('/', [OrderController::class, 'index'])->name('index');
     });
+
+    Route::prefix('carts')->name('carts.')->group(function () {
+        Route::get('decrement/{id}', [CartController::class, 'decrement'])->name('decrement');
+    });
+
 });

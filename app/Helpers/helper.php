@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Order;
 use App\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,30 @@ if (!function_exists("generatePaymentNumber")) {
             } else {
                 return $prefix . $thnBulan . (int) substr($model::get()->last()->$property, -8) + 1;
             }
+        }
+        return null;
+    }
+}
+if (!function_exists("generateCodeOrder")) {
+    function generateCodeOrder()
+    {
+        $thnBulan = Carbon::now()->year . Carbon::now()->month;
+        if (Order::count() === 0) {
+            return 'CO' . $thnBulan . '10000001';
+        } else {
+            return 'CO' . $thnBulan . (int) substr(Order::get()->last()->kode_pesanan, -8) + 1;
+        }
+        return null;
+    }
+}
+if (!function_exists("generateNoAntrian")) {
+    function generateNoAntrian()
+    {
+        $thnBulan = Carbon::now()->year . Carbon::now()->month;
+        if (Order::count() === 0) {
+            return $thnBulan . '10000001';
+        } else {
+            return $thnBulan . (int) substr(Order::get()->last()->no_antrian, -8) + 1;
         }
         return null;
     }
