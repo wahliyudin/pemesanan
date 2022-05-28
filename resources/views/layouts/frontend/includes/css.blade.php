@@ -10,7 +10,25 @@
 <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
 <!-- Custom CSS -->
 <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+<style>
+    .nav-icon {
+        display: flex;
+        align-items: center;
+    }
 
+    .nav-icon .icon {
+        color: #cfa671;
+        font-size: 20px;
+        transition: color .5s ease;
+    }
+
+    .nav-item:hover .nav-icon .icon {
+        color: white;
+    }
+
+</style>
+@stack('css')
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
