@@ -9,6 +9,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('backend.dashboard');
+        return view('backend.dashboard', [
+            'breadcrumb' => [
+                'title' => 'Dashboard',
+                'path' => [
+                    'Dashboard' => 0
+                ]
+            ]
+        ]);
     }
 }

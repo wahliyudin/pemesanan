@@ -8,10 +8,12 @@ use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransaksiController;
 use App\Http\Controllers\CheckController;
 use App\Http\Controllers\Frontend\HomeController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', function () {
+
     return redirect()->route('login');
 });
 

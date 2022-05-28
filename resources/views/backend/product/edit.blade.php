@@ -72,8 +72,8 @@
                                     <div class="row flex-column" style="align-items: center;">
                                         <label for="photo" style="align-self: flex-start;">Preview</label>
 
-                                        <img class="photo-preview img-fluid mb-3 col-sm-5 rounded"
-                                            style="width: 320px; height: 210px; object-fit: cover;"
+                                        <img class="photo-preview img-fluid mb-3 rounded"
+                                            style="width: 320px !important; height: 210px !important;"
                                             src="{{ $product->photo }}" alt="">
                                     </div>
                                 </div>

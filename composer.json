@@ -12,6 +12,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "nunomaduro/laravel-desktop-notifier": "^2.6",
         "pusher/pusher-php-server": "^7.0",
         "santigarcor/laratrust": "^7.1",
         "yajra/laravel-datatables-oracle": "*"

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Crypt;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -20,9 +21,9 @@ class CategoryController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)"
-                        class="edit btn btn-success btn-sm" id="'.Crypt::encrypt($row->id).'">Edit</a> <a
+                        class="edit btn btn-success btn-sm" id="' . Crypt::encrypt($row->id) . '">Edit</a> <a
                             href="javascript:void(0)"
-                        class="delete btn btn-danger btn-sm" id="'.Crypt::encrypt($row->id).'">Delete</a>';
+                        class="delete btn btn-danger btn-sm" id="' . Crypt::encrypt($row->id) . '">Delete</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -37,6 +38,12 @@ class CategoryController extends Controller
                 'nama' => $request->nama
             ]);
             CategoryCreated::dispatch('Category Berhasil Disimpan');
+            // Artisan::call('notify:category', [
+            //     'message' => [
+            //         'header' => 'Created!',
+            //         'message' => 'Data berhasil disimpan'
+            //     ]
+            // ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Menambahkan data category',
@@ -86,6 +93,12 @@ class CategoryController extends Controller
             $category->update([
                 'nama' => $request->nama_update,
             ]);
+            // Artisan::call('notify:category', [
+            //     'message' => [
+            //         'header' => 'Updated!',
+            //         'message' => 'Data berhasil diubah'
+            //     ]
+            // ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Memperbarui data category',
@@ -110,7 +123,12 @@ class CategoryController extends Controller
             }
 
             $category->delete();
-
+            // Artisan::call('notify:category', [
+            //     'message' => [
+            //         'header' => 'Deleted!',
+            //         'message' => 'Data berhasil dihapus'
+            //     ]
+            // ]);
             return response()->json([
                 'status' => 'success',
                 'message' => 'Menghapus data category',

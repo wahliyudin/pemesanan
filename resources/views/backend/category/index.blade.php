@@ -231,7 +231,8 @@
                 notification.onclick = () => {
                     window.open(window.location.href);
                 };
-            });
+            })
+
         });
     </script>
 @endpush
