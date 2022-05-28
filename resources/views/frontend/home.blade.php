@@ -127,9 +127,11 @@
                         <div class="gallery-single fix">
                             <img src="{{ $product->photo }}" class="img-fluid" alt="Image">
                             <div class="why-text">
-                                <h4>{{ $product->nama }}</h4>
-                                <p>{{ $product->keterangan }}</p>
+                                <h4>{{ Str::limit($product->nama, 22, '...') }}</h4>
+                                <p>{{ Str::limit($product->keterangan, 30, '...') }}</p>
                                 <h5>Rp. {{ numberFormat($product->harga) }}</h5>
+                                <a href="{{ route('customer.cart.store', Crypt::encrypt($product->id)) }}"
+                                    class="btn btn-primary">Add To Cart</a>
                             </div>
                         </div>
                     </div>
@@ -277,3 +279,4 @@
     </div>
     <!-- End Contact info -->
 @endsection
+@include('layouts.includes.toastr')

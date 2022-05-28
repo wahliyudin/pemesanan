@@ -52,7 +52,8 @@
                                         <td>{{ $cart->quantity }}</td>
                                         <td>Rp. {{ numberFormat($cart->price * $cart->quantity) }}</td>
                                         <td>
-                                            <button class="btn btn-danger btn-xs">delete</button>
+                                            <a href="{{ route('customer.cart.remove', Crypt::encrypt($cart->id)) }}"
+                                                class="btn btn-danger btn-xs">delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -188,3 +189,4 @@
 
     </style>
 @endpush
+@include('layouts.includes.toastr')

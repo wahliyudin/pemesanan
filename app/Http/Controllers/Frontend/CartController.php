@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Darryldecode\Cart\Facades\CartFacade as Cart;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class CartController extends Controller
 {
@@ -16,20 +19,25 @@ class CartController extends Controller
     }
 
 
-    public function addToCart(Request $request)
+    public function addToCart($id)
     {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+
+        }
+        $product = Product::find($id);
         Cart::add([
-            'id' => $request->id,
-            'name' => $request->name,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
+            'id' => $product->id,
+            'name' => $product->nama,
+            'price' => $product->harga,
+            'quantity' => 1,
             'attributes' => array(
-                'image' => $request->image,
+                'image' => $product->photo,
             )
         ]);
-        session()->flash('success', 'Product is Added to Cart Successfully !');
 
-        return redirect()->route('cart.list');
+        return back()->with('success', 'Product is Added to Cart Successfully !');
     }
 
     public function updateCart(Request $request)
@@ -49,12 +57,15 @@ class CartController extends Controller
         return redirect()->route('cart.list');
     }
 
-    public function removeCart(Request $request)
+    public function removeCart($id)
     {
-        Cart::remove($request->id);
-        session()->flash('success', 'Item Cart Remove Successfully !');
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
 
-        return redirect()->route('cart.list');
+        }
+        Cart::remove($id);
+        return back()->with('success', 'Item Cart Remove Successfully !');
     }
 
     public function clearAllCart()

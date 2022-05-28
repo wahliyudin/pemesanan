@@ -42,7 +42,7 @@
                     @auth
                         <li class="nav-item">
                             <a class="nav-link nav-icon" href="{{ route('customer.cart.list') }}"><i
-                                    class='icon bx bxs-cart-alt'></i> Cart</a>
+                                    class='icon bx bxs-cart-alt'></i> Cart ({{ Cart::getTotalQuantity() }})</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('customer.cart.list') }}">Pesanan</a>

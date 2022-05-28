@@ -15,6 +15,8 @@ task
 [] backup database
 [] confirm delete category
 [] pengguna
-[] add to cart
+[x] add to cart
+[] update qty
+[x] delete cart
 [] tabel cart
 [] detail pesanan

@@ -10,3 +10,4 @@
 <script src="{{ asset('frontend/js/form-validator.min.js') }}"></script>
 <script src="{{ asset('frontend/js/contact-form-script.js') }}"></script>
 <script src="{{ asset('frontend/js/custom.js') }}"></script>
+@stack('script')
