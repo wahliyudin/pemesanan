@@ -9,4 +9,3 @@ task
 [] struk
 [] confirm delete category
 [] backup database
-[] Dashboard
