@@ -39,13 +39,13 @@
                         </div>
                     </div>
                     <div class="card-footer">
-                        <div class="row justify-content-end align-items-center" style="width: 100%;">
-                            <button class="skip btn btn-danger float-right">Lewat</button>
+                        <div class="row justify-content-between align-items-center" style="width: 100%;">
+                            <a href="{{ route('admin.transaksi.data.skip') }}" class="btn btn-primary">Data Lewat</a>
+                            <button class="skip btn btn-danger">Lewat</button>
                         </div>
                     </div>
                 </div>
             </div>
-
 
             <div class="col-12">
                 <div class="card">

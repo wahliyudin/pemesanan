@@ -55,6 +55,41 @@ class TransaksiController extends Controller
         ]);
     }
 
+    public function dataSkip()
+    {
+        return view('backend.transaksi.data-skip', [
+            'breadcrumb' => [
+                'title' => 'Pesanan',
+                'path' => [
+                    'Transaksi' => route('admin.transaksi.index'),
+                    'Pesanan' => 0
+                ]
+            ],
+            'orders' => Order::where('status', Order::STATUS_CANCEL)->get()
+        ]);
+    }
+
+    public function restore($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+        }
+        try {
+            Order::find($id)->update(['status' => Order::STATUS_FALSE]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order berhasil direstore',
+            ]);
+        } catch (\Exception $th) {
+            $th->getCode() == 400 ?? $code = 500;
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], $code);
+        }
+    }
+
     public function payment(StorePaymentRequest $request, $id)
     {
         try {

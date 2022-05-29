@@ -37,10 +37,12 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::get('transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('transaksi.bayar');
     Route::post('transaksi/{id}/payment', [TransaksiController::class, 'payment'])->name('transaksi.payment');
     Route::get('transaksi/{id}/skip', [TransaksiController::class, 'skip'])->name('transaksi.skip');
+    Route::get('transaksi/skip', [TransaksiController::class, 'dataSkip'])->name('transaksi.data.skip');
+    Route::get('transaksi/restore/{id}', [TransaksiController::class, 'restore'])->name('transaksi.skip.restore');
 
     Route::get('laporan', [LaporanController::class, 'index'])->name('laporan');
-    Route::get('exports/laporan', [ExportController::class,
-    'laporan'])->name('exports.laporan');
+    Route::get('exports/laporan', [ExportController::class, 'laporan'])->name('exports.laporan');
+    Route::get('exports/bukti-transaksi', [ExportController::class, 'buktiTransaksi'])->name('exports.bukti-transaksi');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {
