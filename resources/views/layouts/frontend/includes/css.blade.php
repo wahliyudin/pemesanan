@@ -27,6 +27,10 @@
         color: white;
     }
 
+    .nav-item.active .nav-icon .icon {
+        color: white;
+    }
+
 </style>
 @stack('css')
 <!--[if lt IE 9]>

@@ -48,11 +48,10 @@ if (!function_exists("generateCodeOrder")) {
 if (!function_exists("generateNoAntrian")) {
     function generateNoAntrian()
     {
-        $thnBulan = Carbon::now()->year . Carbon::now()->month;
         if (Order::count() === 0) {
-            return $thnBulan . '10000001';
+            return '1001';
         } else {
-            return $thnBulan . (int) substr(Order::get()->last()->no_antrian, -8) + 1;
+            return (int) substr(Order::get()->last()->no_antrian, -4) + 1;
         }
         return null;
     }

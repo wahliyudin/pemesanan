@@ -40,8 +40,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="row justify-content-end align-items-center" style="width: 100%;">
-                            <a href="{{ route('admin.transaksi.skip', Crypt::encrypt($order?->id)) }}"
-                                class="btn btn-danger float-right">Lewat</a>
+                            <button class="skip btn btn-danger float-right">Lewat</button>
                         </div>
                     </div>
                 </div>
@@ -98,6 +97,9 @@
             }).buttons().container().appendTo('#payment_wrapper .col-md-6:eq(0)');
         });
     </script>
+@endpush
+@push('css')
+    <link rel="stylesheet" href="{{ asset('plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 @endpush
 {{-- @push('script')
     <script type="text/javascript">
@@ -234,3 +236,73 @@
         }
     </script>
 @endpush --}}
+@push('script')
+    <script src="{{ asset('plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="/js/app.js"></script>
+    <script>
+        window.Echo.channel("order").listen("OrderCreated", (event) => {
+            // console.log(event);
+            // alert('sukses');
+            // event.preventDefault();
+            location.reload();
+            Notification.requestPermission(permission => {
+                let notification = new Notification('New category alert!', {
+                    body: event.message, // content for the alert
+                    icon: "{{ asset('frontend/images/logo.png') }}" // optional image url
+                });
+
+                // link to page on clicking the notification
+                notification.onclick = () => {
+                    window.open(window.location.href);
+                };
+            })
+
+        });
+
+        var ajaxError = function(jqXHR, xhr, textStatus, errorThrow, exception) {
+            if (jqXHR.status === 0) {
+                toastr.error('Not connect.\n Verify Network.', 'Error!');
+            } else if (jqXHR.status == 400) {
+                toastr.warning(jqXHR['responseJSON'].message, 'Peringatan!');
+            } else if (jqXHR.status == 404) {
+                toastr.error('Requested page not found. [404]', 'Error!');
+            } else if (jqXHR.status == 500) {
+                toastr.error('Internal Server Error [500].' + jqXHR['responseJSON'].message, 'Error!');
+            } else if (exception === 'parsererror') {
+                toastr.error('Requested JSON parse failed.', 'Error!');
+            } else if (exception === 'timeout') {
+                toastr.error('Time out error.', 'Error!');
+            } else if (exception === 'abort') {
+                toastr.error('Ajax request aborted.', 'Error!');
+            } else {
+                toastr.error('Uncaught Error.\n' + jqXHR.responseText, 'Error!');
+            }
+        };
+
+        $('.skip').click(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Apakah Anda Yakin?',
+                text: "Pesanan akan silewat!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Lewat Sekarang!'
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ route('admin.transaksi.skip', Crypt::encrypt($order?->id)) }}",
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(resp) {
+                            location.reload()
+                            toastr.success(resp.message, 'Berhasil!');
+                        },
+                        error: ajaxError,
+                    });
+                }
+            })
+        });
+    </script>
+@endpush

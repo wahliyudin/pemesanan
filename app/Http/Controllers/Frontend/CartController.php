@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Events\OrderCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\Product;
@@ -107,6 +108,9 @@ class CartController extends Controller
             }
             $order->products()->sync($data);
             Cart::clear();
+            if (Order::where('status', Order::STATUS_FALSE)->count() == 1) {
+                OrderCreated::dispatch();
+            }
             return response()->json([
                 'status' => 'success',
                 'message' => 'Berhasil memesan',

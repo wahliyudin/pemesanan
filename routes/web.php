@@ -46,6 +46,8 @@ Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->gro
     Route::get('blog', [HomeController::class, 'blog'])->name('blog');
     Route::get('blog-detail', [HomeController::class, 'blogDetail'])->name('blog-detail');
     Route::get('contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('pesanan', [HomeController::class, 'order'])->name('order');
+    Route::get('pesanan/{id}/detail', [HomeController::class, 'orderDetail'])->name('order.detail');
 
     Route::get('cart', [CartController::class, 'cartList'])->name('cart.list');
     Route::get('cart/{id}', [CartController::class, 'addToCart'])->name('cart.store');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Events\OrderSkip;
+use App\Events\PaymentCreated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePaymentRequest;
 use App\Models\Account;
@@ -66,7 +68,7 @@ class TransaksiController extends Controller
         $request->merge(['order_id' => $id]);
         Order::find($id)->update(['status' => Order::STATUS_TRUE]);
         Payment::create($request->all());
-
+        PaymentCreated::dispatch();
         return redirect()->route('admin.transaksi.index')->with('success', 'Pembayaran berhasil');
     }
 
@@ -76,7 +78,19 @@ class TransaksiController extends Controller
             $id = Crypt::decrypt($id);
         } catch (DecryptException $e) {
         }
-        Order::find($id)->update(['status' => Order::STATUS_CANCEL]);
-        return redirect()->route('admin.transaksi.index');
+        try {
+            Order::find($id)->update(['status' => Order::STATUS_CANCEL]);
+            OrderSkip::dispatch();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Order berhasil dilewat',
+            ]);
+        } catch (\Exception $th) {
+            $th->getCode() == 400 ?? $code = 500;
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], $code);
+        }
     }
 }

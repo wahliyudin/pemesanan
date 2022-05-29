@@ -40,12 +40,12 @@
                         <a class="nav-link" href="{{ route('customer.contact') }}">Contact</a>
                     </li> --}}
                     @auth
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('customer.cart.list') ? 'active' : '' }}">
                             <a class="nav-link nav-icon" href="{{ route('customer.cart.list') }}"><i
                                     class='icon bx bxs-cart-alt'></i> Cart ({{ Cart::getTotalQuantity() }})</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('customer.cart.list') }}">Pesanan</a>
+                        <li class="nav-item {{ request()->routeIs('customer.order') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('customer.order') }}">Pesanan</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('logout') }}"

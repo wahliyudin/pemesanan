@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class HomeController extends Controller
 {
@@ -58,5 +62,24 @@ class HomeController extends Controller
     public function contact()
     {
         return view('frontend.contact');
+    }
+
+    public function order()
+    {
+        return view('frontend.pesanan', [
+            'orders' => auth()->user()->orders
+        ]);
+    }
+
+    public function orderDetail($id)
+    {
+        try {
+            $id = Crypt::decrypt($id);
+        } catch (DecryptException $e) {
+
+        }
+        return view('frontend.detail-pesanan', [
+            'order' => Order::with('products', 'user')->find($id)
+        ]);
     }
 }

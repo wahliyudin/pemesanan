@@ -11,12 +11,12 @@ task
 [] Laporan
 [] Dashboard
 [x] Frontend
-[] reservation
 [] backup database
 [] confirm delete category
 [] pengguna
 [x] add to cart
-[] update qty
+[x] update qty
 [x] delete cart
-[] tabel cart
-[] detail pesanan
+[x] tabel cart
+[x] detail pesanan
+[] soft delete yang lewat transaksi
