@@ -4,6 +4,8 @@ use App\Events\CategoryCreated;
 use App\Http\Controllers\Backend\AccountController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\ExportController;
+use App\Http\Controllers\Backend\LaporanController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\TransaksiController;
 use App\Http\Controllers\CheckController;
@@ -35,6 +37,10 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->name('ad
     Route::get('transaksi/{id}/bayar', [TransaksiController::class, 'bayar'])->name('transaksi.bayar');
     Route::post('transaksi/{id}/payment', [TransaksiController::class, 'payment'])->name('transaksi.payment');
     Route::get('transaksi/{id}/skip', [TransaksiController::class, 'skip'])->name('transaksi.skip');
+
+    Route::get('laporan', [LaporanController::class, 'index'])->name('laporan');
+    Route::get('exports/laporan', [ExportController::class,
+    'laporan'])->name('exports.laporan');
 });
 
 Route::middleware(['auth', 'role:customer', 'verified'])->name('customer.')->group(function () {
