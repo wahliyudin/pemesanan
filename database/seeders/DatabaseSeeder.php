@@ -18,14 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
         $this->call(CategorySeeder::class);
         $this->call(AccountSeeder::class);
-        // Product::factory(10)->create();
-        // Order::factory(10)->create();
-
-        // OrderProduct::factory(20)->create();
-        // $this->call(LaratrustSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }

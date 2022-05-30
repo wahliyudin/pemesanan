@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Kategori</h3>
+                        <h3 class="card-title">Produk</h3>
                         <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-primary float-right"><i
                                 class="fas fa-plus mr-2"></i>
                             Tambah
@@ -149,7 +149,7 @@
         function deleteProduct(id) {
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: "Category akan dihapus secara permanen!",
+                text: "Produk akan dihapus secara permanen!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

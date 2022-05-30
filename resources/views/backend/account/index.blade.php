@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Account</h3>
+                        <h3 class="card-title">Akun Rekening</h3>
                         <button class="btn btn-sm btn-primary float-right" onclick="tambahAccount()"><i
                                 class="fas fa-plus mr-2"></i>
                             Tambah
@@ -122,11 +122,11 @@
             let code = $('#code').val();
 
             if (!nama) {
-                toastr.warning('Nama account tidak boleh kosong!', 'Peringatan!');
+                toastr.warning('Nama akun tidak boleh kosong!', 'Peringatan!');
                 return false;
             }
             if (!code) {
-                toastr.warning('Code account tidak boleh kosong!', 'Peringatan!');
+                toastr.warning('Code akun tidak boleh kosong!', 'Peringatan!');
                 return false;
             }
 
@@ -175,11 +175,11 @@
             let nama = $('#nama_update').val();
             let code = $('#code_update').val();
             if (!nama) {
-                toastr.warning('Nama account tidak boleh kosong!', 'Peringatan!');
+                toastr.warning('Nama akun tidak boleh kosong!', 'Peringatan!');
                 return false;
             }
             if (!code) {
-                toastr.warning('Nama account tidak boleh kosong!', 'Peringatan!');
+                toastr.warning('Nama akun tidak boleh kosong!', 'Peringatan!');
                 return false;
             }
 
@@ -211,7 +211,7 @@
         function deleteAccount(id) {
             Swal.fire({
                 title: 'Apakah Anda Yakin?',
-                text: "Account akan dihapus secara permanen!",
+                text: "Akun Rekening akan dihapus secara permanen!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -232,23 +232,4 @@
             })
         }
     </script>
-    {{-- <script src="/js/app.js"></script>
-    <script>
-        window.Echo.channel("messages").listen("CategoryCreated", (event) => {
-            // console.log(event);
-            // alert('sukses');
-            table.ajax.reload();
-            Notification.requestPermission(permission => {
-                let notification = new Notification('New account alert!', {
-                    body: event.message, // content for the alert
-                    icon: "{{ asset('frontend/images/logo.png') }}" // optional image url
-                });
-
-                // link to page on clicking the notification
-                notification.onclick = () => {
-                    window.open(window.location.href);
-                };
-            });
-        });
-    </script> --}}
 @endpush

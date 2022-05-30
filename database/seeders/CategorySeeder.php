@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        $categories = ['drink', 'lunch', 'dinner'];
+        $categories = ['Noodle', 'Dimsum Goreng', 'Dimsum Kukus', 'Minuman'];
         for ($i=0; $i < count($categories); $i++) {
             Category::create(['nama'=>$categories[$i]]);
         }

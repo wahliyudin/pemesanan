@@ -25,10 +25,10 @@ class ProductController extends Controller
     {
         return view('backend.product.index', [
             'breadcrumb' => [
-                'title' => 'Products',
+                'title' => 'Produk',
                 'path' => [
                     'Master Data' => route('admin.products.index'),
-                    'Products' => 0
+                    'Produk' => 0
                 ]
             ]
         ]);
@@ -43,7 +43,7 @@ class ProductController extends Controller
     {
         return view('backend.product.create', [
             'breadcrumb' => [
-                'title' => 'Tambah Product',
+                'title' => 'Tambah produk',
                 'path' => [
                     'Master Data' => route('admin.products.index'),
                     'Products' => route('admin.products.index'),
@@ -85,11 +85,11 @@ class ProductController extends Controller
 
         return view('backend.product.edit', [
             'breadcrumb' => [
-                'title' => 'Edit Product',
+                'title' => 'Ubah produk',
                 'path' => [
                     'Master Data' => route('admin.products.index'),
                     'Products' => route('admin.products.index'),
-                    'Edit' => 0
+                    'Ubah' => 0
                 ]
             ],
             'categories' => Category::latest()->get(['id', 'nama']),
@@ -122,16 +122,5 @@ class ProductController extends Controller
         }
         $product->update($data);
         return redirect()->route('admin.products.index')->with('success', 'Data berhasil diubah');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        //
     }
 }

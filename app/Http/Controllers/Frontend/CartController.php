@@ -167,8 +167,19 @@ class CartController extends Controller
             $id = Crypt::decrypt($id);
         } catch (DecryptException $e) {
         }
-        Cart::remove($id);
-        return back()->with('success', 'Item Cart Remove Successfully !');
+        try {
+            Cart::remove($id);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil dihapus',
+            ]);
+        } catch (\Throwable $th) {
+            $th->getCode() == 400 ?? $code = 500;
+            return response()->json([
+                'status' => 'error',
+                'message' => $th->getMessage()
+            ], $code);
+        }
     }
 
     public function clearAllCart()

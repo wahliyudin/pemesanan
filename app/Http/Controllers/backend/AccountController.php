@@ -11,10 +11,10 @@ class AccountController extends Controller
     {
         return view('backend.account.index', [
             'breadcrumb' => [
-                'title' => 'Account',
+                'title' => 'Akun Rekening',
                 'path' => [
                     'Master Data' => route('admin.accounts.index'),
-                    'Account' => 0
+                    'Akun Rekening' => 0
                 ]
             ]
         ]);

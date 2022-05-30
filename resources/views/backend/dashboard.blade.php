@@ -39,7 +39,7 @@
                     <div class="inner">
                         <h4>{{ $pesanan_hari_ini }}</h4>
 
-                        <p>Pesanan Hari ini</p>
+                        <p>Pesanan Saat Ini</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -54,7 +54,7 @@
                     <div class="inner">
                         <h4>{{ $users }}</h4>
 
-                        <p>Pengguna</p>
+                        <p>Customer</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>

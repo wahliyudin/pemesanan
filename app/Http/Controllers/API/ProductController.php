@@ -22,8 +22,8 @@ class ProductController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="' . route('admin.products.edit', Crypt::encrypt($row->id)) . '"
-                        class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)"
-                        class="delete btn btn-danger btn-sm" id="' . Crypt::encrypt($row->id) . '">Delete</a>';
+                        class="edit btn btn-success btn-sm">Ubah</a> <a href="javascript:void(0)"
+                        class="delete btn btn-danger btn-sm" id="' . Crypt::encrypt($row->id) . '">Hapus</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -45,7 +45,7 @@ class ProductController extends Controller
             $product = Product::find($id);
 
             if (!$product) {
-                throw new Exception('Data product tidak ditemukan!', 400);
+                throw new Exception('Data produk tidak ditemukan!', 400);
             }
             $image = Str::replaceFirst(env('APP_URL'). '/'.'storage/', '', $product->photo);
             Storage::delete('public/'.$image);
@@ -53,7 +53,7 @@ class ProductController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Menghapus data product',
+                'message' => 'Menghapus data produk',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;

@@ -1,8 +1,8 @@
 <header class="top-navbar">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="{{ asset('frontend/images/logo.png') }}" alt="" />
+            <a class="navbar-brand" href="{{ route('customer.home') }}">
+                <img style="border-radius: 50%; max-width: 50px;" src="{{ asset('logo.png') }}" alt="" />
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food"
                 aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +17,7 @@
                     </li>
                     {{-- <li class="nav-item {{ request()->routeIs('customer.about') ? 'active' : '' }}"><a
                             class="nav-link" href="{{ route('customer.about') }}">About</a></li> --}}
-                    <li class="nav-item dropdown">
+                    {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">
                             <a class="dropdown-item" href="reservation.html">Reservation</a>
@@ -28,7 +28,7 @@
                             <a class="dropdown-item" href="{{ route('customer.contact') }}">Contact</a>
                             <a class="dropdown-item" href="{{ route('customer.about') }}">About</a>
                         </div>
-                    </li>
+                    </li> --}}
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Blog</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown-a">

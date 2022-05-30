@@ -19,8 +19,8 @@ class AccountController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm"
-        id="' . Crypt::encrypt($row->id) . '">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm"
-        id="' . Crypt::encrypt($row->id) . '">Delete</a>';
+        id="' . Crypt::encrypt($row->id) . '">Ubah</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm"
+        id="' . Crypt::encrypt($row->id) . '">Hapus</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -37,7 +37,7 @@ class AccountController extends Controller
             ]);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Menambahkan data account',
+                'message' => 'Menambahkan data akun',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;
@@ -54,7 +54,7 @@ class AccountController extends Controller
             $id = Crypt::decrypt($id);
             $account = Account::find($id);
             if (!$account) {
-                throw new Exception('Data account tidak ditemukan!', 400);
+                throw new Exception('Data akun tidak ditemukan!', 400);
             }
             $data = [
                 'id' => Crypt::encrypt($account->id),
@@ -80,7 +80,7 @@ class AccountController extends Controller
             $id = Crypt::decrypt($id);
             $account = Account::find($id);
             if (!$account) {
-                throw new Exception('Data account tidak ditemukan!', 400);
+                throw new Exception('Data akun tidak ditemukan!', 400);
             }
             $account->update([
                 'nama' => $request->nama_update,
@@ -88,7 +88,7 @@ class AccountController extends Controller
             ]);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Memperbarui data account',
+                'message' => 'Memperbarui data akun',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;
@@ -106,14 +106,14 @@ class AccountController extends Controller
             $account = Account::find($id);
 
             if (!$account) {
-                throw new Exception('Data account tidak ditemukan!', 400);
+                throw new Exception('Data akun tidak ditemukan!', 400);
             }
 
             $account->delete();
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Menghapus data account',
+                'message' => 'Menghapus data akun',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;

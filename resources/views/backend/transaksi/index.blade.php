@@ -2,86 +2,88 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <table class="table table-light">
-                            <tbody>
-                                <tr>
-                                    <td width="90">Nama</td>
-                                    <td width="10">:</td>
-                                    <td>{{ $order?->user->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td width="90">No Telp</td>
-                                    <td width="10">:</td>
-                                    <td>{{ $order?->user->phone }}</td>
-                                </tr>
-                                <tr>
-                                    <td width="90">Email</td>
-                                    <td width="10">:</td>
-                                    <td>{{ $order?->user->email }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <a href="{{ route('admin.transaksi.bayar', Crypt::encrypt($order?->id)) }}"
-                            class="btn btn-primary float-right"><i class="fas fa-money-bill-wave mr-2"></i> Bayar</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <div class="row flex-column align-items-center">
-                            <span>No Antrian :</span>
-                            <span style="font-size: 50px;">{{ $order?->no_antrian }}</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <div class="row justify-content-between align-items-center" style="width: 100%;">
-                            <a href="{{ route('admin.transaksi.data.skip') }}" class="btn btn-primary">Data Lewat</a>
-                            <button class="skip btn btn-danger">Lewat</button>
+        <div {!! isset($order) ? '' : 'style="height: 70vh;"' !!} class="row {{ isset($order) ? '' : 'justify-content-center align-items-center' }}">
+            @if (isset($order))
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-light">
+                                <tbody>
+                                    <tr>
+                                        <td width="90">Nama</td>
+                                        <td width="10">:</td>
+                                        <td>{{ $order?->user->name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="90">No Telp</td>
+                                        <td width="10">:</td>
+                                        <td>{{ $order?->user->phone }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td width="90">Email</td>
+                                        <td width="10">:</td>
+                                        <td>{{ $order?->user->email }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <a href="{{ route('admin.transaksi.bayar', Crypt::encrypt($order?->id)) }}"
+                                class="btn btn-primary float-right"><i class="fas fa-money-bill-wave mr-2"></i> Bayar</a>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <table id="product" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Photo</th>
-                                    <th>Nama</th>
-                                    <th>Harga</th>
-                                    <th>Qty</th>
-                                    <th>Jumlah</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (isset($order->products))
-                                    @foreach ($order->products as $product)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>
-                                                <img style='border-radius: 10px;' src="{{ $product->photo }}"
-                                                    height="100" />
-                                            </td>
-                                            <td>{{ $product->nama }}</td>
-                                            <td>Rp. {{ numberFormat($product->harga) }}</td>
-                                            <td>{{ $product->pivot->qty }}</td>
-                                            <td>Rp. {{ numberFormat($product->pivot->qty * $product->harga) }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="row flex-column align-items-center">
+                                <span>No Antrian :</span>
+                                <span style="font-size: 50px;">{{ $order?->no_antrian }}</span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row justify-content-end align-items-center" style="width: 100%;">
+                                <button class="skip btn btn-danger float-right">Lewat</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="product" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Photo</th>
+                                        <th>Nama</th>
+                                        <th>Harga</th>
+                                        <th>Qty</th>
+                                        <th>Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (isset($order->products))
+                                        @foreach ($order->products as $product)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>
+                                                    <img style='border-radius: 10px;' src="{{ $product->photo }}"
+                                                        height="100" />
+                                                </td>
+                                                <td>{{ $product->nama }}</td>
+                                                <td>Rp. {{ numberFormat($product->harga) }}</td>
+                                                <td>{{ $product->pivot->qty }}</td>
+                                                <td>Rp. {{ numberFormat($product->pivot->qty * $product->harga) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <h1>Tidak ada pesanan</h1>
+            @endif
         </div>
     </div>
 @endsection

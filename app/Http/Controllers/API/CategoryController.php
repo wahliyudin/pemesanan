@@ -21,9 +21,9 @@ class CategoryController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)"
-                        class="edit btn btn-success btn-sm" id="' . Crypt::encrypt($row->id) . '">Edit</a> <a
+                        class="edit btn btn-success btn-sm" id="' . Crypt::encrypt($row->id) . '">Ubah</a> <a
                             href="javascript:void(0)"
-                        class="delete btn btn-danger btn-sm" id="' . Crypt::encrypt($row->id) . '">Delete</a>';
+                        class="delete btn btn-danger btn-sm" id="' . Crypt::encrypt($row->id) . '">Hapus</a>';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -37,7 +37,7 @@ class CategoryController extends Controller
             Category::create([
                 'nama' => $request->nama
             ]);
-            CategoryCreated::dispatch('Category Berhasil Disimpan');
+            CategoryCreated::dispatch('Kategori Berhasil Disimpan');
             // Artisan::call('notify:category', [
             //     'message' => [
             //         'header' => 'Created!',
@@ -46,7 +46,7 @@ class CategoryController extends Controller
             // ]);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Menambahkan data category',
+                'message' => 'Menambahkan data kategori',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;
@@ -63,7 +63,7 @@ class CategoryController extends Controller
             $id = Crypt::decrypt($id);
             $category = Category::find($id);
             if (!$category) {
-                throw new Exception('Data category tidak ditemukan!', 400);
+                throw new Exception('Data kategori tidak ditemukan!', 400);
             }
             $data = [
                 'id' => Crypt::encrypt($category->id),
@@ -88,7 +88,7 @@ class CategoryController extends Controller
             $id = Crypt::decrypt($id);
             $category = Category::find($id);
             if (!$category) {
-                throw new Exception('Data category tidak ditemukan!', 400);
+                throw new Exception('Data kategori tidak ditemukan!', 400);
             }
             $category->update([
                 'nama' => $request->nama_update,
@@ -101,7 +101,7 @@ class CategoryController extends Controller
             // ]);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Memperbarui data category',
+                'message' => 'Memperbarui data kategori',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;
@@ -119,7 +119,7 @@ class CategoryController extends Controller
             $category = Category::find($id);
 
             if (!$category) {
-                throw new Exception('Data category tidak ditemukan!', 400);
+                throw new Exception('Data kategori tidak ditemukan!', 400);
             }
 
             $category->delete();
@@ -131,7 +131,7 @@ class CategoryController extends Controller
             // ]);
             return response()->json([
                 'status' => 'success',
-                'message' => 'Menghapus data category',
+                'message' => 'Menghapus data kategori',
             ]);
         } catch (\Exception $th) {
             $th->getCode() == 400 ?? $code = 500;
